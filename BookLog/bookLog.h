@@ -21,7 +21,7 @@ public:
     Book(int id, std::string title, std::string author, int pages);
     void markAsRead();
     void displayBooks() const;
-    int getId();
+    int getId() const;
 };
 
 class BookTracker {

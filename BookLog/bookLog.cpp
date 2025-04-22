@@ -10,7 +10,7 @@
 #include <string>
 
 
-Book::Book(int id, std::string title, std::string author, int pages) : title(title), author(author), pages(pages), isRead(false) {}
+Book::Book(int id, std::string title, std::string author, int pages) : id(id), title(title), author(author), pages(pages), isRead(false) {}
 
 BookTracker::BookTracker() : nextId(1) {}
 
@@ -26,7 +26,7 @@ void Book::displayBooks() const {
     std::cout << "Status: " << (isRead ? "Read" : "Currently Reading") << std::endl;
 }
 
-int Book::getId() {
+int Book::getId() const {
     return id;
 }
 
@@ -34,12 +34,15 @@ void BookTracker::addBook() {
     std::string title, author;
     int pages;
     
-    std::cout << "Book title: \n";
+    std::cin.ignore();
+    
+    std::cout << "Book title: ";
     std::getline(std::cin, title);
-    std::cout << "Author: \n";
+    std::cout << "Author: ";
     std::getline(std::cin, author);
-    std::cout << "Pages: \n";
+    std::cout << "Pages: ";
     std::cin >> pages;
+    std::cin.ignore();
     
     Book newBook(nextId, title, author, pages);
     books.push_back(newBook);
@@ -63,13 +66,18 @@ void BookTracker::markBookAsRead() {
     std::cout << "Enter book ID: ";
     std::cin >> id;
     
+    bool found = false;
     for (Book& book : books) {
         if (book.getId() == id) {
             book.markAsRead();
             std::cout << "Book marked as read.\n";
+            found = true;
+            break;
         }
     }
-    std::cout << "Book not found.\n";
+    if (!found) {
+        std::cout << "Book not found.\n";
+    }
 }
 
 
