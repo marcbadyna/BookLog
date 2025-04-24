@@ -7,8 +7,21 @@
 
 #include <iostream>
 #include "bookLog.h"
+#include <sqlite3.h>
 
 int main() {
+    sqlite3* db;
+        int exit = sqlite3_open("books.db", &db);
+
+        if (exit) {
+            std::cerr << "Error opening DB: " << sqlite3_errmsg(db) << std::endl;
+            return 1;
+        } else {
+            std::cout << "Opened DB successfully!" << std::endl;
+        }
+
+        sqlite3_close(db);
+    
     BookTracker tracker;
     int choice;
     
